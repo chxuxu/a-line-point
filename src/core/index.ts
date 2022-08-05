@@ -9,7 +9,7 @@ export {default as Point} from "../core/Point";
 export {default as Line } from "../core/Line";
 export {default as Scene } from "../core/Scene";
 export {default as Actor} from "../core/Actor";
-
+export {default as Stage} from "../core/Stage";
 export function renderHtml(stageNode:HTMLElement){
   
 }

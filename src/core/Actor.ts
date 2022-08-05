@@ -1,5 +1,7 @@
 import { IActor,IPoint,ILine,IScene,IStyles } from "./data"
 import {colorRgb,setStyleToElement} from "./utils";
+import {addClassName}from "./dom";
+import {ClassNamePre} from "./constant";
 export default class Actor implements IActor{
   line=null;//所属关键帧
   target=null;//对应的DOM节点或其他动画对象
@@ -15,6 +17,9 @@ export default class Actor implements IActor{
   }
   constructor(target:HTMLElement,styles:IStyles){
     this.target=target;
+    if(target){
+      addClassName(this.target,ClassNamePre+"actor");
+    }
     if(styles[0]){
       setStyleToElement(target,styles[0]);
     }

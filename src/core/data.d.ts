@@ -22,19 +22,43 @@ export interface ILine{
 }
 //场景
 export interface IScene{
+  index:number;
+  target:HTMLElement|null;
+  stage:IStage;
   lines:Array<ILine>;
+  next:IScene;
+  prev:IScene;
   play:()=>void;
+  show:(shpos?:string,toBegin?:boolean)=>void;
+  hide:(shpos?:string)=>void;
+  options?:ISceneOptions;
+  _onInit?:(options?:any)=>void;
 }
 //舞台
 export interface IStage{
-  scene:Array<IScene>;
+  isAuto?:boolean;//是否自动播放场景
+  target?:HTMLElement|null;//舞台背景元素
+  scenes:Array<IScene>;
+  sceneIndex:number;//当前显示的场景索引
   start:()=>void;
-  onEnd:()=>void;
+  addScene?:(scene:IScene)=>void;
+  createScene?:(target:HTMLElement|null,options?:ISceneOptions)=>IScene;
+  //onEnd:()=>void;
 }
 //构造一条时间线的配置对象
 export interface ILineConfig{
   points:Array<IPoint>;
   actors:Array<IActor>
+}
+
+export interface ISceneOptions{
+  showFn?:ATF;
+  hideFn?:ATF;
+  shpos?:"tb"|"bt"|"lr"|"rl"|"center"|"cover";//center表示从中心点扩散显示，cover从外围缩小显示
+  onShow?:(e:IScene)=>void;
+  onHide?:(e:IScene)=>void;
+  delay?:number;//延迟多少毫秒，自动显示下一个场景
+  duration?:number;//显示花了多少时间
 }
 
 //原始样式
@@ -86,3 +110,11 @@ export enum EasyType {
   easeOutBounce = "easeOutBounce",
   easeInOutBounce = "easeInOutBounce",
 }
+
+/* - 指定从慢速开始，然后加快，然后缓慢结束的动画（默认）
+linear - 规定从开始到结束的速度相同的动画
+ease-in - 规定慢速开始的动画
+ease-out - 规定慢速结束的动画
+ease-in-out - 指定开始和结束较慢的动画
+cubic-bezier(n,n,n,n)*/
+export type ATF="ease"|"linear"|"ease-in"|"ease-out"|"ease-in-out"|"cubic-bezier";

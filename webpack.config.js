@@ -11,7 +11,9 @@ const {
 module.exports = {
   mode: "development",
   entry: {
-    simple: "./demos/index.js",
+    home: "./demos/index.js",
+    h5: "./demos/h5/index.js",
+    demo1: "./demos/demo1/index.js",
   },
   output: {
     path: __dirname + "/dist",
@@ -107,6 +109,22 @@ module.exports = {
       chunks: ['simple'],
       scriptLoading: "blocking",
       publicPath: "/"
+    }),
+    new htmlWebpackPlugin({
+      filename: "h5/index.html",
+      template: "./demos/h5/index.html",
+      inject: "body",
+      chunks: ['simple'],
+      scriptLoading: "blocking",
+      publicPath: "/h5/"
+    }),
+    new htmlWebpackPlugin({
+      filename: "demo1/index.html",
+      template: "./demos/demo1/index.html",
+      inject: "body",
+      chunks: ['simple'],
+      scriptLoading: "blocking",
+      publicPath: "/demo1/"
     }),
     new WebpackManifestPlugin()
   ],

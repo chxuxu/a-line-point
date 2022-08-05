@@ -1,9 +1,6 @@
 import { IActor, IPoint, ILine, IScene, IStyles } from "./data";
-import { getCurrentStyles,setStylesToTarget } from "./utils";
-const updateTime = 1000 / 60
-const rAF = window.requestAnimationFrame || function (cb) {
-  setTimeout(cb, updateTime)
-}
+import { getCurrentStyles,setStylesToTarget,rAF } from "./utils";
+
 export default class Point implements IPoint {
   time:number = 0;
   line:ILine= null;
@@ -49,15 +46,6 @@ export default class Point implements IPoint {
     if (this.next) {
       let chgActors: Array<IActor> =this.line.actors;//两个关键帧上的相同演员，样式属性不同
       let nextPoint = this.next;//下个关键帧
-      // //循环获取两个关键帧上的相同演员
-      // this.actors.map((actor: IActor) => {
-      //   nextPoint.actors.map((nextActor: IActor) => {
-      //     if (actor.target == nextActor.target) {
-      //       chgActors.push([actor, nextActor]);
-      //     }
-      //   });
-      // });
-      //let during = nextPoint.time - this.time;//两帧质检时间间隔，毫秒
       this.run(chgActors, this.time,nextPoint.time);//对两帧之间的相同演员运行动画。
     }else {
       this.line.onEnd(this);//当前时间线执行完成

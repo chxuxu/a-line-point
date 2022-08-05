@@ -1,8 +1,8 @@
 import {IStyles,EasyType} from "./data";
 
 let stringUnit = /^\d+[a-z]+$/;
-const updateTime = 1000 / 60
-const rAF = window.requestAnimationFrame || function (cb) {
+const updateTime = 1000 / 60;//说道毫秒执行一次。
+export const rAF = window.requestAnimationFrame || function (cb) {
   setTimeout(cb, updateTime)
 }
 
@@ -226,8 +226,8 @@ export function getCurrentStyles(startStyles, endStyles, during, position = 0, f
   const currentStyles: any = {};
   for (let key in startStyles) {
     
-    const updateCount = during / updateTime
-    const perUpdateDistance = 1 / updateCount
+    const updateCount = during / updateTime;//总共执行多少次
+    const perUpdateDistance = 1 / updateCount;//执行一次动画后标记位置，0--1之间的数字，到达1说明动画结束
     let fn = tweenFuns[fnName] || tweenFuns.easeInSine;
     
     if(Array.isArray(startStyles[key])){
